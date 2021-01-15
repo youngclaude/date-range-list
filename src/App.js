@@ -1,23 +1,19 @@
 import logo from './logo.svg';
+import DatePickerContainer from './modules/MAIN/date-picker.container.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
+import HeroSection from "./modules/CORE/hero-section.view";
+import FooterSection from "./modules/CORE/footer-section.view";
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <ReactNotification />
+      <HeroSection />
+      <DatePickerContainer />  
+      <FooterSection />
     </div>
   );
 }

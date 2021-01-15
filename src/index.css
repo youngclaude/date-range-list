@@ -1,3 +1,16 @@
+html {
+  background: lightslategrey;
+  background: linear-gradient(45deg, #778899, #708090, #5d6b79);
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+#root, body {
+  background: none;
+  background-color: transparent !important;
+  margin-bottom: -10px;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +23,79 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.list-group-item {
+  box-shadow: 5rem 5rem 20rem rgba(49, 46, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.85);
+  min-width: 350px;
+}
+
+.list-group-item:hover {
+  transition: perspective(1px) scale(1.015);
+  background-color: #eeffee;
+}
+
+.mini-heading, .main-heading{
+  margin: 0px;
+  padding: 0px;
+  line-height: 1;
+}
+
+.mini-heading{
+  font-size: 20px;
+  color: darkgray;
+}
+.main-heading{
+  font-size: 30px;
+  color: #101b12;
+}
+
+.heading-container{
+  margin-bottom: 15px;
+}
+
+.hero-section {
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://images.unsplash.com/photo-1508672019048-805c876b67e2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1393&q=80");
+  height: 100vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin-left: 0 !important;
+  justify-content: center;
+  align-items: center;
+}
+
+@media(max-width: 800px){
+  .hero-section {
+    background-repeat: inherit;
+  }
+}
+
+.hero-text{
+  color: aliceblue; 
+  font-size: 38px; 
+  text-align: center;
+}
+
+.hero-text h1{
+  font-size: 50px; 
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.hero-text p{
+  color: aliceblue; 
+  font-size: 30px; 
+  line-height: 10px;
+}
+
+footer {
+  padding: 10px;
+  margin-top: 50px;
+}
+
+input{
+  width: 100%;
 }
