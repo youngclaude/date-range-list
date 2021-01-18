@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import DateCard from './date-picker.view';
-import { store } from 'react-notifications-component';
 import DatePicker from "react-datepicker";
-
+import {connect} from 'react-redux';
 import "react-datepicker/dist/react-datepicker.css";
+import {actionNotifSuccess, actionNotifWarn, actionNotifFail} from '../../REDUX/actions/actions_Notifications';
 
 class DatePickerContainer extends Component{
     constructor(props){
@@ -32,6 +32,11 @@ class DatePickerContainer extends Component{
         console.log('btn clicked');
 
         if ( this.state.date1 != '' && this.state.date2 != ''){
+            if (this.state.date1 > this.state.date2){
+                console.log('!! date 2 is earler bro !!');
+                this.props.notifyFailure('Warning', 'Your second date is must come after the first');
+                return 0;
+            }
 
             const dateCombo =  {
                 startDate: this.getFormattedDate(this.state.date1),
@@ -43,21 +48,11 @@ class DatePickerContainer extends Component{
 
             this.setState({valuesList: tempList});
 
-            store.addNotification({
-                title: "Success!",
-                message: "New Date Range added to savelist",
-                type: "success",
-                insert: "top",
-                container: "bottom-center",
-                animationIn: ["animate__animated", "animate__fadeIn"],
-                animationOut: ["animate__animated", "animate__fadeOut"],
-                dismiss: {
-                  duration: 4000,
-                  onScreen: true
-                }
-            });
+            
+            this.props.notifySuccess('Congrats', 'you have added da ting');
 
             // must add some input validation here later. Will check if any of the new dates are different from the old times "statewise"
+
         }
         else alert('empty entry');
 
@@ -66,7 +61,6 @@ class DatePickerContainer extends Component{
     // these can be eliminated with the oporations wihtin the onChange method itself
     handleStartDateChange = (date) => {
         // this.setState({date1: e.target.value})
-        console.log({date});
         this.setState({date1: date})
     }
 
@@ -79,26 +73,21 @@ class DatePickerContainer extends Component{
         e.stopPropagation();
 
         console.log('Delete Clicked');
-        console.log({givenIndex});
         
         const tempList = [...this.state.valuesList];
         const tempSpliceResult = tempList.splice(givenIndex, 1);
     
         this.setState({ valuesList: [...tempList] });
 
-        store.addNotification({
-            title: "Delete",
-            message: "The Date Range has now been deleted",
-            type: "warning",
-            insert: "top",
-            container: "bottom-center",
-            animationIn: ["animate__animated", "animate__fadeIn"],
-            animationOut: ["animate__animated", "animate__fadeOut"],
-            dismiss: {
-              duration: 4000
-            }
-        });
+        this.props.notifyWarning('Congrats', 'you have deleted da ting');
+    }
 
+    componentDidMount() {
+        console.log('pre mount store: ', this.props);
+    }
+
+    componentDidUpdate(){
+        console.log('updated store: ', this.props);
     }
 
     render(){
@@ -170,13 +159,13 @@ class DatePickerContainer extends Component{
                                     {
                                         this.state.valuesList.map((valsObj, index) => {
                                             return (                        
-                                                    <DateCard 
-                                                        start={valsObj.startDate}
-                                                        end={valsObj.endDate}
-                                                        handleDeleteClick={this.handleDeleteClick}
-                                                        key={index}
-                                                        index={index}
-                                                    /> ?? <p>None here</p> 
+                                                <DateCard 
+                                                    start={valsObj.startDate}
+                                                    end={valsObj.endDate}
+                                                    handleDeleteClick={this.handleDeleteClick}
+                                                    key={index}
+                                                    index={index}
+                                                /> ?? <p>None here</p> 
                                             )
                                         })
                                     }
@@ -194,7 +183,38 @@ class DatePickerContainer extends Component{
     }
 }
 
-export default DatePickerContainer;
+
+const mapStateToProps = (state={}) => {
+    console.log('mapStateToProps state:', state);
+    return {
+        localNotifHolder: state.notificationMessage
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        notifySuccess: (title='', message='') => {
+            dispatch(actionNotifSuccess({
+                title, 
+                message
+            }))  
+        },
+        notifyWarning: (title='', message='') => {
+            dispatch(actionNotifWarn({
+                title, 
+                message
+            }))  
+        },
+        notifyFailure: (title='', message='') => {
+            dispatch(actionNotifFail({
+                title, 
+                message
+            }))  
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DatePickerContainer);
 
 
 /*

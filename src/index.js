@@ -4,12 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'animate.css';
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { notifyClient } from "./REDUX/reducers/reducer_Notifications";
+
+
+let store = createStore(notifyClient);
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+      <App/>
+  </Provider>,
   document.getElementById('root')
 );
 
